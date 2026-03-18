@@ -34,8 +34,8 @@ const ExamAnalytics = () => {
       setLoading(true);
       setError(null);
       const [examRes, attemptsRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/admin/exams/${examId}`),
-        axios.get(`http://localhost:5000/api/admin/exams/${examId}/attempts`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/admin/exams/${examId}`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/admin/exams/${examId}/attempts`),
       ]);
       setExam(examRes.data.data);
       setAttempts(attemptsRes.data.data || []);

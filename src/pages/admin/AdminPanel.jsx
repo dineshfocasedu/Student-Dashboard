@@ -48,9 +48,9 @@ const AdminPanel = () => {
       setLoading(true);
       setError(null);
       const [statsRes, examsRes, usersRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/admin/dashboard'),
-        axios.get('http://localhost:5000/api/admin/exams?limit=5'),
-        axios.get('http://localhost:5000/api/admin/users?limit=5'),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/admin/dashboard`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/admin/exams?limit=5`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/admin/users?limit=5`),
       ]);
       setDashStats(statsRes.data.data);
       setRecentExams(examsRes.data.data || []);

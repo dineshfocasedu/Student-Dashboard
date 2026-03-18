@@ -27,7 +27,7 @@ const ExamList = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axios.get('http://localhost:5000/api/exams');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/exams`);
       setExams(res.data.data || []);
     } catch (err) {
       console.error(err);

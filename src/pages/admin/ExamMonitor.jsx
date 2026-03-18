@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import AdminNavbar from '../../components/AdminNavbar';
 
-const API = 'http://localhost:5000';
+const API = import.meta.env.VITE_API_URL;
 
 const ExamMonitor = () => {
   const { examId } = useParams();

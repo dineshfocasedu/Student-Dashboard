@@ -57,7 +57,7 @@ const Settings = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axios.get('http://localhost:5000/api/admin/settings');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/settings`);
       setSettings(res.data.data || res.data.settings || res.data);
     } catch (err) {
       console.error(err);
@@ -87,7 +87,7 @@ const Settings = () => {
     e.preventDefault();
     try {
       setSaving(true);
-      await axios.put('http://localhost:5000/api/admin/settings', settings);
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/settings`, settings);
       toast.success('Settings saved successfully');
     } catch (err) {
       console.error(err);

@@ -15,7 +15,7 @@ const ExamResults = () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await axios.get(`http://localhost:5000/api/exams/${attemptId}/results`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/exams/${attemptId}/results`);
       setResults(res.data.data);
     } catch (err) {
       console.error(err);

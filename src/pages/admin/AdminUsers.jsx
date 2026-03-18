@@ -34,7 +34,7 @@ const AdminUsers = () => {
       const params = new URLSearchParams({ page: currentPage, limit: 10 });
       if (roleFilter !== 'all') params.set('role', roleFilter);
       if (search.trim()) params.set('search', search.trim());
-      const res = await axios.get(`http://localhost:5000/api/admin/users?${params.toString()}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/users?${params.toString()}`);
       const data = res.data.data;
       setUsers(data.users || data || []);
       setTotalPages(data.totalPages || data.pagination?.totalPages || 1);
@@ -61,7 +61,7 @@ const AdminUsers = () => {
   const handleToggleStatus = async (userId, isActive) => {
     try {
       setTogglingId(userId);
-      await axios.post(`http://localhost:5000/api/admin/users/${userId}/toggle-status`);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/users/${userId}/toggle-status`);
       setUsers((prev) =>
         prev.map((u) => (u._id === userId ? { ...u, isActive: !isActive } : u))
       );
@@ -77,7 +77,7 @@ const AdminUsers = () => {
   const handleDelete = async (userId) => {
     try {
       setDeletingId(userId);
-      await axios.delete(`http://localhost:5000/api/admin/users/${userId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/users/${userId}`);
       setUsers((prev) => prev.filter((u) => u._id !== userId));
       toast.success('User deleted successfully');
     } catch (err) {

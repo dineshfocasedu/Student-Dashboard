@@ -32,8 +32,8 @@ const Dashboard = () => {
       setLoading(true);
       setError(null);
       const [attemptsRes, examsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/users/attempts'),
-        axios.get('http://localhost:5000/api/exams'),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/users/attempts`),
+        axios.get(`${import.meta.env.VITE_API_URL}/api/exams`),
       ]);
       setStats(attemptsRes.data.data.stats || {});
       setAttempts(attemptsRes.data.data.attempts || []);

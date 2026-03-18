@@ -35,7 +35,7 @@ const AdminExams = () => {
       const params = new URLSearchParams();
       if (statusFilter !== 'all') params.set('status', statusFilter);
       if (search.trim()) params.set('search', search.trim());
-      const res = await axios.get(`http://localhost:5000/api/admin/exams?${params.toString()}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/exams?${params.toString()}`);
       setExams(res.data.data || []);
     } catch (err) {
       console.error(err);
@@ -58,7 +58,7 @@ const AdminExams = () => {
   const handleStatusChange = async (examId, newStatus) => {
     try {
       setUpdatingStatusId(examId);
-      await axios.put(`http://localhost:5000/api/admin/exams/${examId}/status`, { status: newStatus });
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/exams/${examId}/status`, { status: newStatus });
       toast.success('Exam status updated');
       setExams((prev) =>
         prev.map((e) => (e._id === examId ? { ...e, status: newStatus } : e))

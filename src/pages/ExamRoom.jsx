@@ -9,7 +9,7 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 import CountdownTimer from '../components/CountdownTimer';
 
-const API = 'http://localhost:5000';
+const API = import.meta.env.VITE_API_URL;
 
 const ExamRoom = () => {
   const { examId } = useParams();

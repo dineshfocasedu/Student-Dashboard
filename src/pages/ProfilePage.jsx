@@ -22,7 +22,7 @@ const ProfilePage = () => {
     const fetchProfile = async () => {
       try {
         setLoadingProfile(true);
-        const res = await axios.get('http://localhost:5000/api/users/profile');
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/profile`);
         const data = res.data.data || res.data.user || res.data;
         setProfile(data);
         setEditName(data.name || '');
