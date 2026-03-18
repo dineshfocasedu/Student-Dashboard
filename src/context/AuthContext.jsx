@@ -2,6 +2,8 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const loadUser = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/me');
+      const response = await axios.get(`${API_BASE_URL}/api/auth/me`);
       setUser(response.data.user);
     } catch (error) {
       console.error('Error loading user:', error);
@@ -46,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
         email,
         password
       });
@@ -70,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/register`, {
         name,
         email,
         password
@@ -95,7 +97,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:5000/api/auth/logout');
+      await axios.post(`${API_BASE_URL}/api/auth/logout`);
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -109,7 +111,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (userData) => {
     try {
-      const response = await axios.put('http://localhost:5000/api/users/profile', userData);
+      const response = await axios.put(`${API_BASE_URL}/api/users/profile`, userData);
       setUser(response.data.data);
       toast.success('Profile updated successfully');
       return { success: true, user: response.data.data };
@@ -122,7 +124,7 @@ export const AuthProvider = ({ children }) => {
 
   const changePassword = async (currentPassword, newPassword) => {
     try {
-      await axios.post('http://localhost:5000/api/users/change-password', {
+      await axios.post(`${API_BASE_URL}/api/users/change-password`, {
         currentPassword,
         newPassword
       });
