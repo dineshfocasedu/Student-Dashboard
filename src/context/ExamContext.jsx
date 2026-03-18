@@ -3,6 +3,8 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useAuth } from './AuthContext';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const ExamContext = createContext();
 
 export const useExam = () => {
@@ -23,7 +25,7 @@ export const ExamProvider = ({ children }) => {
   const fetchExams = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/exams');
+      const response = await axios.get(`${API_BASE_URL}/api/exams`);
       setExams(response.data.data);
       return response.data.data;
     } catch (error) {
@@ -37,7 +39,7 @@ export const ExamProvider = ({ children }) => {
   const fetchExamById = useCallback(async (examId) => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/api/exams/${examId}`);
+      const response = await axios.get(`${API_BASE_URL}/api/exams/${examId}`);
       setCurrentExam(response.data.data);
       return response.data.data;
     } catch (error) {
@@ -51,7 +53,7 @@ export const ExamProvider = ({ children }) => {
   const startExam = useCallback(async (examId) => {
     try {
       setLoading(true);
-      const response = await axios.post(`http://localhost:5000/api/exams/${examId}/start`);
+      const response = await axios.post(`${API_BASE_URL}/api/exams/${examId}/start`);
       setExamAttempt(response.data.data);
       setCurrentExam(response.data.data.exam);
       toast.success('Exam started successfully');
@@ -68,7 +70,7 @@ export const ExamProvider = ({ children }) => {
   const submitExam = useCallback(async (attemptId, answers, videoRecordings, faceDetectionLogs) => {
     try {
       setLoading(true);
-      const response = await axios.post(`http://localhost:5000/api/exams/${attemptId}/submit`, {
+      const response = await axios.post(`${API_BASE_URL}/api/exams/${attemptId}/submit`, {
         answers,
         videoRecordings,
         faceDetectionLogs
@@ -88,7 +90,7 @@ export const ExamProvider = ({ children }) => {
 
   const logViolation = useCallback(async (attemptId, type, details, screenshot) => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/exams/${attemptId}/violation`, {
+      const response = await axios.post(`${API_BASE_URL}/api/exams/${attemptId}/violation`, {
         type,
         details,
         screenshot
@@ -109,7 +111,7 @@ export const ExamProvider = ({ children }) => {
 
   const saveFaceDetection = useCallback(async (attemptId, facesDetected, imageUrl) => {
     try {
-      await axios.post(`http://localhost:5000/api/exams/${attemptId}/face-detection`, {
+      await axios.post(`${API_BASE_URL}/api/exams/${attemptId}/face-detection`, {
         facesDetected,
         imageUrl
       });
@@ -121,7 +123,7 @@ export const ExamProvider = ({ children }) => {
   const getExamResults = useCallback(async (attemptId) => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/api/exams/${attemptId}/results`);
+      const response = await axios.get(`${API_BASE_URL}/api/exams/${attemptId}/results`);
       return response.data.data;
     } catch (error) {
       toast.error('Failed to fetch exam results');
@@ -134,7 +136,7 @@ export const ExamProvider = ({ children }) => {
   const createExam = useCallback(async (examData) => {
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:5000/api/exams', examData);
+      const response = await axios.post(`${API_BASE_URL}/api/exams`, examData);
       toast.success('Exam created successfully');
       return response.data.data;
     } catch (error) {
@@ -149,7 +151,7 @@ export const ExamProvider = ({ children }) => {
   const updateExam = useCallback(async (examId, examData) => {
     try {
       setLoading(true);
-      const response = await axios.put(`http://localhost:5000/api/exams/${examId}`, examData);
+      const response = await axios.put(`${API_BASE_URL}/api/exams/${examId}`, examData);
       toast.success('Exam updated successfully');
       return response.data.data;
     } catch (error) {
@@ -164,7 +166,7 @@ export const ExamProvider = ({ children }) => {
   const deleteExam = useCallback(async (examId) => {
     try {
       setLoading(true);
-      await axios.delete(`http://localhost:5000/api/exams/${examId}`);
+      await axios.delete(`${API_BASE_URL}/api/exams/${examId}`);
       toast.success('Exam deleted successfully');
       return true;
     } catch (error) {
